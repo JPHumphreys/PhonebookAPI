@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.w3.org/1999/xhtml">
 
 <head>
-    <title>PhoneBook </title>
+    <title>Phonebook </title>
 </head>
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -14,12 +14,14 @@
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggler" aria-controls="navbarToggler" aria-expanded="false" aria-label="Toggle navigation">
 			<span class="navbar-toggler-icon"></span>
 		</button>
-        <a class="navbar-brand" href="#">079 Me</a>
+        <a id="o-seven-nine-me" class="navbar-brand" href="#">079 Me</a>
 
         <div class="collapse navbar-collapse" id="navbarToggler">
             <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-                <li class="nav-item active"><a class="nav-link" href="#">Home<span
-						class="sr-only">(current)</span></a></li>
+                <li class="nav-item active">
+                    <a id="home-link" class="nav-link" href="#">Home<span class="sr-only">(current)</span></a></li>
+                <li class="nav-item active"><button id="create-contact-btn" type="button" class="btn btn-outline-light" data-toggle="modal" data-target=".bd-create-modal-lg">Create Contact</button></li>
+                <li class="nav-item active"><button id="search-contact-btn" type="button" class="btn btn-outline-light" data-toggle="modal" data-target=".bd-search-modal-lg">Search Contact</button></li>
             </ul>
         </div>
     </nav>
@@ -27,8 +29,7 @@
 
     <div class="container">
 
-        <button type="button" class="btn btn-outline-info" data-toggle="modal" data-target=".bd-create-modal-lg">Create Contact</button>
-        <button type="button" class="btn btn-outline-info" data-toggle="modal" data-target=".bd-search-modal-lg">Search Contact</button>
+
 
         <!-- Large modal to create post -->
         <div class="modal fade bd-create-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
@@ -61,9 +62,9 @@
                             </div>
 
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-outline-danger" data-dismiss="modal">Close</button>
+                                <button id="create-contact-close" type="button" class="btn btn-outline-danger" data-dismiss="modal">Close</button>
                                 <!-- Button to create post -->
-                                <button type="submit" class="btn btn-outline-success">Create Contact</button>
+                                <button id="create-contact-create" type="submit" class="btn btn-outline-success">Create Contact</button>
                             </div>
                         </form>
                     </div>
@@ -102,10 +103,10 @@
                                     <input type="text" th:field="*{phoneNumber}" class="form-control" name="phoneNumberEdit" id="phoneNumberEdit" value="" />
                                 </div>
                             </div>
-                            <div class="modal-footer"> -->
-                                <button type="button" class="btn btn-outline-danger" data-dismiss="modal">Close</button>
+                            <div class="modal-footer">
+                                <button id="edit-modal-close" type="button" class="btn btn-outline-danger" data-dismiss="modal">Close</button>
                                 <!-- Button to create post -->
-                                <button type="submit" class="btn btn-outline-success">Update Contact</button>
+                                <button id="edit-modal-update" type="submit" class="btn btn-outline-success">Update Contact</button>
                             </div>
                         </div>
                     </div>
@@ -114,28 +115,32 @@
         </div>
 
         <!-- Search feature -->
-        <div class="modal fade bd-search-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="searchModalLabel">Search Contact</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <div class="search">
+            <div class="modal fade bd-search-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="searchModalLabel">Search Contact</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
-                    </div>
-                    <div class="modal-body">
+                        </div>
+                        <div class="modal-body">
 
-                        <form th:action="@{/findOne/{firstName}(firstName=${contact.firstName})}" th:object="${contact}" method="post">
-                            <div class="form-group">
-                                <label for="firstName" class="col-form-label">Name:</label>
-                                <input type="text" th:field="*{firstName}" class="form-control" id="firstName">
-                            </div>
+                            <form th:action="@{/findOne/{firstName}(firstName=${contact.firstName})}" th:object="${contact}" method="post">
+                                <div class="form-group">
+                                    <label for="firstName" class="col-form-label">Name:</label>
+                                    <input type="text" th:field="*{firstName}" class="form-control" id="firstNameSearch">
+                                </div>
 
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-outline-danger" data-dismiss="modal">Close</button>
-                                <button type="submit" class="btn btn-outline-success">Search</button>
-                            </div>
-                        </form>
+                                <div class="modal-footer">
+
+                                    <button id="search-contact-close" type="button" class="btn btn-outline-danger" data-dismiss="modal">Close</button>
+                                    <button id="search-contact-search" type="submit" class="btn btn-outline-success">Search</button>
+
+                                </div>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -144,13 +149,13 @@
         <br>
         <div class="table">
             <div class="col-md-12">
-                <div th:each="cont : ${contacts}" class="toast fade show">
+                <div th:each="cont : ${contacts}" class="toast fade show" name="cards">
                     <div class="toast-header">
-                        <strong th:text="${cont.firstName}" class="mr-auto"></strong>
+                        <strong th:text="${cont.firstName}" class="mr-auto" id="cardName"></strong>
                         <!-- <small class="text-muted">Just now</small> -->
-                        <a id="editbutton" th:href="@{/edit/{id}(id=${cont.id})}" class="ml-2 mb-1 close fa fa-edit eBtn" data-toggle="modal" data-target=".bd-edit-modal-lg">Edit</a>
+                        <a id="edit-contact-btn" th:href="@{/edit/{id}(id=${cont.id})}" class="ml-2 mb-1 close fa fa-edit eBtn" data-toggle="modal" data-target=".bd-edit-modal-lg">Edit</a>
                         <form th:action="@{/delete/{id}(id=${cont.id})}" method="GET">
-                            <button type="submit" class="ml-2 mb-1 close" data-dismiss="toast">&times;</button>
+                            <button id="delete-contact-btn" type="submit" class="ml-2 mb-1 close" data-dismiss="toast">&times;</button>
                         </form>
                     </div>
 
@@ -178,6 +183,19 @@
                     $('.myForm #phoneNumberEdit').val(users.phoneNumber);
                 });
             });
+
+            // $('.search .search-contact-search').on('click', function(event) {
+            //     event.preventDefault();
+            //     var nametosearch = document.getElementById("firstNameSearch");
+            //     var highlight = document.getElementsByName("cards");
+            //     var searchinTable = highlight.getElementById("cardName");
+
+            //     if (nametosearch == searchinTable){
+            //         highlight.style.
+            //     }
+
+            // });
+
         });
     </script>
 </body>
