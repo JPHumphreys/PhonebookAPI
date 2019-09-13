@@ -38,8 +38,9 @@ public class ContactController {
         return contservice.getContactById(id);
     }
 
-    @RequestMapping(value="/findOne/{name}", method = RequestMethod.GET)
-    public Contact searchContact(@PathVariable String firstName){
-        return contservice.getContactByName(firstName);
+    @RequestMapping(value="/{firstName}", method = RequestMethod.GET)
+    public RedirectView searchContact(@PathVariable String firstName){
+        contservice.getContactByName(firstName);
+        return new RedirectView("/");
     }
 }

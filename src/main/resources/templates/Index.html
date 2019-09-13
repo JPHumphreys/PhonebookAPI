@@ -127,7 +127,7 @@
                         </div>
                         <div class="modal-body">
 
-                            <form th:action="@{/findOne/{firstName}(firstName=${contact.firstName})}" th:object="${contact}" method="post">
+                            <form th:action="@{/{firstName}(firstName=${contact.firstName})}" th:object="${contact}" method="GET">
                                 <div class="form-group">
                                     <label for="firstName" class="col-form-label">Name:</label>
                                     <input type="text" th:field="*{firstName}" class="form-control" id="firstNameSearch">
@@ -151,7 +151,7 @@
             <div class="col-md-12">
                 <div th:each="cont : ${contacts}" class="toast fade show" name="cards">
                     <div class="toast-header">
-                        <strong th:text="${cont.firstName}" class="mr-auto" id="cardName"></strong>
+                        <strong th:text="${cont.firstName}" class="mr-auto names"></strong>
                         <!-- <small class="text-muted">Just now</small> -->
                         <a id="edit-contact-btn" th:href="@{/edit/{id}(id=${cont.id})}" class="ml-2 mb-1 close fa fa-edit eBtn" data-toggle="modal" data-target=".bd-edit-modal-lg">Edit</a>
                         <form th:action="@{/delete/{id}(id=${cont.id})}" method="GET">
@@ -184,17 +184,24 @@
                 });
             });
 
-            // $('.search .search-contact-search').on('click', function(event) {
-            //     event.preventDefault();
-            //     var nametosearch = document.getElementById("firstNameSearch");
-            //     var highlight = document.getElementsByName("cards");
-            //     var searchinTable = highlight.getElementById("cardName");
+            $('.search #search-contact-search').on('click', function(event) {
+                debugger;
+                var nametosearch = document.getElementById("firstNameSearch");
+                var highlight = document.getElementsByName("cards");
+                var obj = [];
+                highlight.forEach(element => {
+                    obj.add(element.getElementsByClassName("names"));
+                });
+                console.log(obj.values);
+                // var searchinTable =
 
-            //     if (nametosearch == searchinTable){
-            //         highlight.style.
-            //     }
+                //     if (nametosearch == searchinTable) {
+                //         alert("it is the same");
+                //     } else {
+                //         alert("nope");
+                //     }
 
-            // });
+            });
 
         });
     </script>
