@@ -1,0 +1,185 @@
+<!doctype html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+
+<head>
+    <title>PhoneBook </title>
+</head>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+
+<body>
+    <!--Navigation bar that interacts with the user -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggler" aria-controls="navbarToggler" aria-expanded="false" aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+        <a class="navbar-brand" href="#">079 Me</a>
+
+        <div class="collapse navbar-collapse" id="navbarToggler">
+            <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+                <li class="nav-item active"><a class="nav-link" href="#">Home<span
+						class="sr-only">(current)</span></a></li>
+            </ul>
+        </div>
+    </nav>
+    <br>
+
+    <div class="container">
+
+        <button type="button" class="btn btn-outline-info" data-toggle="modal" data-target=".bd-create-modal-lg">Create Contact</button>
+        <button type="button" class="btn btn-outline-info" data-toggle="modal" data-target=".bd-search-modal-lg">Search Contact</button>
+
+        <!-- Large modal to create post -->
+        <div class="modal fade bd-create-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="createModalLabel">New Contact</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+
+                        <form th:action="@{/submit}" th:object="${contact}" method="post">
+                            <div class="form-group">
+                                <!-- <label for="id" class="col-form-label">id:</label> -->
+                                <input type="hidden" th:field="*{id}" class="form-control" id="id">
+                            </div>
+                            <div class="form-group">
+                                <label for="firstName" class="col-form-label">Name:</label>
+                                <input type="text" th:field="*{firstName}" class="form-control" id="firstName">
+                            </div>
+                            <div class="form-group">
+                                <label for="address" class="col-form-label">Address:</label>
+                                <textarea th:field="*{address}" class="form-control" id="address"> </textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="phoneNumber" class="col-form-label">Number:</label>
+                                <input type="tel" th:field="*{phoneNumber}" class="form-control" id="phoneNumber">
+                            </div>
+
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-outline-danger" data-dismiss="modal">Close</button>
+                                <!-- Button to create post -->
+                                <button type="submit" class="btn btn-outline-success">Create Contact</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <br>
+        <!-- Edit post -->
+        <div class="myForm">
+            <form th:action="@{/submit}" th:object="${contact}" method="post">
+                <div class="modal fade bd-edit-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" id="editModal">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="editModalLabel">Edit Contact</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="form-group">
+                                    <label for="title" class="col-form-label">ID:</label>
+                                    <input type="hidden" th:field="*{id}" class="form-control" name="idEdit" id="idEdit" readonly/>
+                                </div>
+                                <div class="form-group">
+                                    <label for="title" class="col-form-label">Title:</label>
+                                    <input type="text" th:field="*{firstName}" class="form-control" name="firstNameEdit" id="firstNameEdit" value="" />
+                                </div>
+                                <div class="form-group">
+                                    <label for="address" class="col-form-label">Address:</label>
+                                    <textarea th:field="*{address}" class="form-control" name="addressEdit" id="addressEdit" value=""></textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label for="phoneNumber" class="col-form-label">Phone Number:</label>
+                                    <input type="text" th:field="*{phoneNumber}" class="form-control" name="phoneNumberEdit" id="phoneNumberEdit" value="" />
+                                </div>
+                            </div>
+                            <div class="modal-footer"> -->
+                                <button type="button" class="btn btn-outline-danger" data-dismiss="modal">Close</button>
+                                <!-- Button to create post -->
+                                <button type="submit" class="btn btn-outline-success">Update Contact</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <!-- Search feature -->
+        <div class="modal fade bd-search-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="searchModalLabel">Search Contact</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+
+                        <form th:action="@{/findOne/{firstName}(firstName=${contact.firstName})}" th:object="${contact}" method="post">
+                            <div class="form-group">
+                                <label for="firstName" class="col-form-label">Name:</label>
+                                <input type="text" th:field="*{firstName}" class="form-control" id="firstName">
+                            </div>
+
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-outline-danger" data-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-outline-success">Search</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <br>
+        <div class="table">
+            <div class="col-md-12">
+                <div th:each="cont : ${contacts}" class="toast fade show">
+                    <div class="toast-header">
+                        <strong th:text="${cont.firstName}" class="mr-auto"></strong>
+                        <!-- <small class="text-muted">Just now</small> -->
+                        <a id="editbutton" th:href="@{/edit/{id}(id=${cont.id})}" class="ml-2 mb-1 close fa fa-edit eBtn" data-toggle="modal" data-target=".bd-edit-modal-lg">Edit</a>
+                        <form th:action="@{/delete/{id}(id=${cont.id})}" method="GET">
+                            <button type="submit" class="ml-2 mb-1 close" data-dismiss="toast">&times;</button>
+                        </form>
+                    </div>
+
+                    <div th:text="${cont.address}" class="toast-body"></div>
+                    <div th:text="${cont.phoneNumber}" class="toast-body"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script src="https://rawgit.com/moment/moment/2.2.1/min/moment.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            $('.table .eBtn').on('click', function(event) {
+                event.preventDefault();
+                var href = $(this).attr('href');
+                $.get(href, function(users, status) {
+                    $('.myForm #idEdit').val(users.id);
+                    $('.myForm #firstNameEdit').val(users.firstName);
+                    $('.myForm #addressEdit').val(users.address);
+                    $('.myForm #phoneNumberEdit').val(users.phoneNumber);
+                });
+            });
+        });
+    </script>
+</body>
+
+</html>

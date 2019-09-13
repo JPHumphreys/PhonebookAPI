@@ -18,11 +18,34 @@ public class Contact {
 
     public Contact(){}
 
+    public Contact(String firstName, int phoneNumber) {
+        this.firstName = firstName;
+        this.phoneNumber = phoneNumber;
+    }
+
     public Contact(String firstName, String address, int phoneNumber){
         this.firstName=firstName;
         this.address=address;
         this.phoneNumber=phoneNumber;
     }
+
+    @Override
+    public String toString() {
+        return "Contact{" +
+                "id=" + id +
+                ", firstName='" + firstName + '\'' +
+                ", address='" + address + '\'' +
+                ", phoneNumber=" + phoneNumber +
+                '}';
+    }
+
+
+    public Contact(String firstName, String address) {
+        this.firstName = firstName;
+        this.address = address;
+    }
+
+
 
     public int getId() {
         return id;

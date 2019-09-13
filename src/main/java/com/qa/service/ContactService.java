@@ -25,7 +25,7 @@ public class ContactService{
     }
 
     public Contact getContactByName(String firstName){
-        return contrepo.findByName(firstName);
+        return contrepo.findByFirstName(firstName);
     }
 
     public void saveContact(Contact cont){

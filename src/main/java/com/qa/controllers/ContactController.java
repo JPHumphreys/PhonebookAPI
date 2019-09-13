@@ -3,13 +3,11 @@ package com.qa.controllers;
 import com.qa.Models.Contact;
 import com.qa.service.ContactService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
+@RestController
 public class ContactController {
 
     @Autowired
@@ -17,9 +15,9 @@ public class ContactController {
 
     @RequestMapping(value="/", method = RequestMethod.GET)
     public ModelAndView message(){
-        ModelAndView mv = new ModelAndView("index");
-        mv.addObject("contact", contservice.getAllContacts());
-        mv.addObject("subscriber", new Contact());
+        ModelAndView mv = new ModelAndView("Index");
+        mv.addObject("contacts", contservice.getAllContacts());
+        mv.addObject("contact", new Contact());
         return mv;
     }
 
@@ -35,13 +33,13 @@ public class ContactController {
         return new RedirectView("/");
     }
 
-    @RequestMapping(value="/findOne/{id}", method = RequestMethod.GET)
+    @RequestMapping(value="/edit/{id}", method = RequestMethod.GET)
     public Contact editContact(@PathVariable int id){
         return contservice.getContactById(id);
     }
 
     @RequestMapping(value="/findOne/{name}", method = RequestMethod.GET)
-    public Contact editContact(@PathVariable String firstName){
+    public Contact searchContact(@PathVariable String firstName){
         return contservice.getContactByName(firstName);
     }
 }
