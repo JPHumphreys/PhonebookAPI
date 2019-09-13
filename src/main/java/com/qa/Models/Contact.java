@@ -11,16 +11,24 @@ public class Contact {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
 
-    private Long id;
+    private int id;
     private String firstName;
     private String address;
     private int phoneNumber;
 
-    public Long getId() {
+    public Contact(){}
+
+    public Contact(String firstName, String address, int phoneNumber){
+        this.firstName=firstName;
+        this.address=address;
+        this.phoneNumber=phoneNumber;
+    }
+
+    public int getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(int id) {
         this.id = id;
     }
 
