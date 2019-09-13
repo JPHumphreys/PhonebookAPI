@@ -11,16 +11,47 @@ public class Contact {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
 
-    private Long id;
+    private int id;
     private String firstName;
     private String address;
     private int phoneNumber;
 
-    public Long getId() {
+    public Contact(){}
+
+    public Contact(String firstName, int phoneNumber) {
+        this.firstName = firstName;
+        this.phoneNumber = phoneNumber;
+    }
+
+    public Contact(String firstName, String address, int phoneNumber){
+        this.firstName=firstName;
+        this.address=address;
+        this.phoneNumber=phoneNumber;
+    }
+
+    @Override
+    public String toString() {
+        return "Contact{" +
+                "id=" + id +
+                ", firstName='" + firstName + '\'' +
+                ", address='" + address + '\'' +
+                ", phoneNumber=" + phoneNumber +
+                '}';
+    }
+
+
+    public Contact(String firstName, String address) {
+        this.firstName = firstName;
+        this.address = address;
+    }
+
+
+
+    public int getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(int id) {
         this.id = id;
     }
 
